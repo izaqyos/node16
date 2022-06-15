@@ -14,17 +14,8 @@ const timeout = new Promise( (res, rej) => {
     setTimeout( () => reject(new Error('timeout expired')), 6000);
 });
 
-console.log('Use Promise.race to trigger timeout if some task takes too long, Run twice. second time TO will expire');
-await Promise.race([
-    someLongRunningTask(5000, 'long running task finished'),
-    timeout
-]);
-//await Promise.race([
-//    someLongRunningTask(11000, 'long running task finished'),
-//    timeout
-//]);
 
-console.log('Better way to cancel is using AbortController. Its better since Promise.race will run all promises to the end and if someLongRunningTask ends before TO the TO would reject');
+console.log('Cancel promise using AbortController');
 const cancelTO = new AbortController();
 const cancelTask = new AbortController();
 
